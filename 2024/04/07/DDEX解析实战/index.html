@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>DDEX解析实战 | DDEX中文站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1.简介使用****XXX公司传输的ddex.xml文件为例子，解析例子为伪代码，主要是阐述ddex.xml 文件的解析思路和关键文本解释。 2.解析DDEX思路主要是4部分**1.解析MessageHeader解析后 ** MessageHeader是ddex文件中第一部份，属于消息的头部信息，主要是定义传输者、接收者、 **2.解析MessageSender 解析后 ** 3.releaseL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDEX解析实战">
+<meta property="og:url" content="https://adonispeng.github.io/javaai.github.io/2024/04/07/DDEX%E8%A7%A3%E6%9E%90%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="DDEX中文站">
+<meta property="og:description" content="1.简介使用****XXX公司传输的ddex.xml文件为例子，解析例子为伪代码，主要是阐述ddex.xml 文件的解析思路和关键文本解释。 2.解析DDEX思路主要是4部分**1.解析MessageHeader解析后 ** MessageHeader是ddex文件中第一部份，属于消息的头部信息，主要是定义传输者、接收者、 **2.解析MessageSender 解析后 ** 3.releaseL">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-07T07:16:52.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:25:30.617Z">
+<meta property="article:author" content="杨鹏">
+<meta property="article:tag" content="ddex DDEX ddex中国">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="DDEX中文站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DDEX中文站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">DDEX是&#34;数字音乐交换&#34;(Digital Data Exchange)的缩写,它是一个全球性的标准化组织,致力于为数字音乐行业提供统一的数据交换标准和协议。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://adonispeng.github.io/javaai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-DDEX解析实战" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/04/07/DDEX%E8%A7%A3%E6%9E%90%E5%AE%9E%E6%88%98/" class="article-date">
+  <time class="dt-published" datetime="2024-04-07T07:16:52.000Z" itemprop="datePublished">2024-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      DDEX解析实战
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p><strong>使用****XXX</strong>公司传输的<strong>ddex.xml</strong>文件为例子，解析例子为伪代码，主要是阐述ddex.xml 文件的解析思路和关键文本解释。</p>
+<h2 id="2-解析DDEX思路主要是4部分"><a href="#2-解析DDEX思路主要是4部分" class="headerlink" title="2.解析DDEX思路主要是4部分"></a>2.解析DDEX思路主要是4部分</h2><p>**1.解析MessageHeader解析后 **</p>
+<p><strong>MessageHeader是ddex文件中第一部份，属于消息的头部信息，主要是定义传输者、接收者、</strong></p>
+<p>**2.解析MessageSender 解析后 **</p>
+<p><strong>3.releaseList 解析后 通过字段的形式，存到各个业务表中</strong></p>
+<p><strong>releaseList属于发行相关的领域，而不是ddex本身，更像是一个传输协议。用于解析DDEX文件中的数据转换成</strong></p>
+<p><strong>4.dealList 解析后组成json形式存储</strong></p>
+<p><strong>dealList是当前这个三个框架中付费信息，歌曲发行的领域是需要的，并且信息中还覆盖到当前的歌曲。</strong></p>
+<span id="more"></span>
+
+<h2 id="3-解析语言和框架"><a href="#3-解析语言和框架" class="headerlink" title="3.解析语言和框架"></a>3.解析语言和框架</h2><p><strong>1.使用解析语言是JAVA语言</strong></p>
+<p><strong>2.使用解析框架只要是解析xml的文件就可以，目前项目使用的解析框架是JAVA解析xml老牌框架，dom4j</strong></p>
+<p><strong>使用的体验非常好。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.DocumentException;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Element;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.SAXReader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DDEXParser</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> DocumentException &#123;</span><br><span class="line">        <span class="type">SAXReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SAXReader</span>();</span><br><span class="line">        <span class="type">Document</span> <span class="variable">document</span> <span class="operator">=</span> reader.read(<span class="string">&quot;ddex.xml&quot;</span>);</span><br><span class="line">        <span class="type">Element</span> <span class="variable">root</span> <span class="operator">=</span> document.getRootElement();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第一部份 解析MessageHeader,映射到MessageHeader类</span></span><br><span class="line">        <span class="type">Element</span> <span class="variable">messageHeader</span> <span class="operator">=</span> root.element(<span class="string">&quot;MessageHeader&quot;</span>);</span><br><span class="line">        <span class="type">MessageHeader</span> <span class="variable">header</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MessageHeader</span>();</span><br><span class="line">        header.setMessageThreadId(messageHeader.element(<span class="string">&quot;MessageThreadId&quot;</span>).getText());</span><br><span class="line">        header.setMessageId(messageHeader.element(<span class="string">&quot;MessageId&quot;</span>).getText());</span><br><span class="line">        <span class="comment">// 第二部分 解析MessageSender</span></span><br><span class="line">        <span class="type">Element</span> <span class="variable">messageSender</span> <span class="operator">=</span> messageHeader.element(<span class="string">&quot;MessageSender&quot;</span>);</span><br><span class="line">        <span class="type">MessageSender</span> <span class="variable">sender</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MessageSender</span>();</span><br><span class="line">        sender.setPartyId(messageSender.element(<span class="string">&quot;PartyId&quot;</span>).getText());</span><br><span class="line">        sender.setPartyName(messageSender.element(<span class="string">&quot;PartyName&quot;</span>).element(<span class="string">&quot;FullName&quot;</span>).getText());</span><br><span class="line">        header.setMessageSender(sender);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第三部份 解析ReleaseList,映射到Release类</span></span><br><span class="line">        <span class="type">Element</span> <span class="variable">releaseList</span> <span class="operator">=</span> root.element(<span class="string">&quot;ReleaseList&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Element release : releaseList.elements(<span class="string">&quot;Release&quot;</span>)) &#123;</span><br><span class="line">            <span class="type">Release</span> <span class="variable">r</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Release</span>();</span><br><span class="line">            r.setLanguageAndScriptCode(release.attributeValue(<span class="string">&quot;LanguageAndScriptCode&quot;</span>));</span><br><span class="line">            r.setIsMainRelease(Boolean.parseBoolean(release.attributeValue(<span class="string">&quot;IsMainRelease&quot;</span>)));</span><br><span class="line">            <span class="comment">// 解析ReleaseId,映射到ReleaseId类</span></span><br><span class="line">            <span class="type">Element</span> <span class="variable">releaseId</span> <span class="operator">=</span> release.element(<span class="string">&quot;ReleaseId&quot;</span>);</span><br><span class="line">            <span class="type">ReleaseId</span> <span class="variable">id</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReleaseId</span>();</span><br><span class="line">            id.setICPN(releaseId.element(<span class="string">&quot;ICPN&quot;</span>).getText());</span><br><span class="line">            id.setProprietaryId(releaseId.element(<span class="string">&quot;ProprietaryId&quot;</span>).getText());</span><br><span class="line">            r.setReleaseId(id);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第四部分 解析DealList,映射到Deal类</span></span><br><span class="line">        <span class="type">Element</span> <span class="variable">dealList</span> <span class="operator">=</span> root.element(<span class="string">&quot;DealList&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Element deal : dealList.elements(<span class="string">&quot;Deal&quot;</span>)) &#123;</span><br><span class="line">            <span class="type">Deal</span> <span class="variable">d</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Deal</span>();</span><br><span class="line">            <span class="comment">// 解析DealTerms,映射到DealTerms类</span></span><br><span class="line">            <span class="type">Element</span> <span class="variable">dealTerms</span> <span class="operator">=</span> deal.element(<span class="string">&quot;DealTerms&quot;</span>);</span><br><span class="line">            <span class="type">DealTerms</span> <span class="variable">terms</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DealTerms</span>();</span><br><span class="line">            terms.setCommercialModelType(dealTerms.element(<span class="string">&quot;CommercialModelType&quot;</span>).getText());</span><br><span class="line">            terms.setUseType(dealTerms.element(<span class="string">&quot;UseType&quot;</span>).getText());</span><br><span class="line">            terms.setWholesalePricePerUnit(dealTerms.element(<span class="string">&quot;WholesalePricePerUnit&quot;</span>).getText());</span><br><span class="line">            d.setDealTerms(terms);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://adonispeng.github.io/javaai.github.io/2024/04/07/DDEX%E8%A7%A3%E6%9E%90%E5%AE%9E%E6%88%98/" data-id="clup7cqx80001yqmldqry1gtg" data-title="DDEX解析实战" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/04/07/DDEX%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          DDEX是什么？
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DDEX/" rel="tag">DDEX</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DDEX/" style="font-size: 10px;">DDEX</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/07/DDEX%E9%83%BD%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%EF%BC%9F/">DDEX都用了哪些国际标准？</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/07/DDEX%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">DDEX是什么？</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/07/DDEX%E8%A7%A3%E6%9E%90%E5%AE%9E%E6%88%98/">DDEX解析实战</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 杨鹏<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
