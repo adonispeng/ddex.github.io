@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>DDEX最佳实践 | DDEX中文站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1.协议标准a.角色相关（单个角色、多个角色、多个提供者等实践）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDEX最佳实践">
+<meta property="og:url" content="https://adonispeng.github.io/javaai.github.io/2024/04/07/DDEX%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="DDEX中文站">
+<meta property="og:description" content="1.协议标准a.角色相关（单个角色、多个角色、多个提供者等实践）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-07T08:50:34.000Z">
+<meta property="article:modified_time" content="2024-04-07T08:52:24.402Z">
+<meta property="article:author" content="杨鹏">
+<meta property="article:tag" content="DDEX">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="DDEX中文站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DDEX中文站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">DDEX是&#34;数字音乐交换&#34;(Digital Data Exchange)的缩写,它是一个全球性的标准化组织,致力于为数字音乐行业提供统一的数据交换标准和协议。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://adonispeng.github.io/javaai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-DDEX最佳实践" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/04/07/DDEX%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="article-date">
+  <time class="dt-published" datetime="2024-04-07T08:50:34.000Z" itemprop="datePublished">2024-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      DDEX最佳实践
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="1-协议标准"><a href="#1-协议标准" class="headerlink" title="1.协议标准"></a>1.协议标准</h1><h2 id="a-角色相关（单个角色、多个角色、多个提供者等实践）"><a href="#a-角色相关（单个角色、多个角色、多个提供者等实践）" class="headerlink" title="a.角色相关（单个角色、多个角色、多个提供者等实践）"></a>a.角色相关（单个角色、多个角色、多个提供者等实践）</h2>  <span id="more"></span>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">&lt;SoundRecordingDetailsByTerritory&gt;</span><br><span class="line">  //主要提供者（演唱、乐队）</span><br><span class="line">  &lt;DisplayArtist SequenceNumber=&quot;1&quot;&gt;</span><br><span class="line">    &lt;PartyName&gt;</span><br><span class="line">      &lt;FullName&gt;U2&lt;/FullName&gt;</span><br><span class="line">    &lt;/PartyName&gt;</span><br><span class="line">    &lt;PartyId Namespace=&quot;...&quot;&gt;123&lt;/PartyId&gt;</span><br><span class="line">    &lt;ArtistRole&gt;MainArtist&lt;/ArtistRole&gt;</span><br><span class="line">  &lt;/DisplayArtist&gt;</span><br><span class="line">  // 顺序为2</span><br><span class="line">  &lt;DisplayArtist **SequenceNumber**=&quot;2&quot;&gt;</span><br><span class="line">      &lt;PartyName&gt;</span><br><span class="line">          &lt;FullName&gt;Various Artists&lt;/FullName&gt;</span><br><span class="line">      &lt;/PartyName&gt;</span><br><span class="line">      &lt;ArtistRole&gt;MainArtist&lt;/ArtistRole&gt;</span><br><span class="line">  &lt;DisplayArtist&gt;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  //艺术家</span><br><span class="line">  &lt;ResourceContributor&gt;</span><br><span class="line">    &lt;PartyName&gt;</span><br><span class="line">      &lt;FullName&gt;Bono&lt;/FullName&gt;</span><br><span class="line">    &lt;/PartyName&gt;</span><br><span class="line">    &lt;ResourceContributorRole&gt;GroupMember&lt;/ResourceContributorRole&gt;</span><br><span class="line">  &lt;/ResourceContributor&gt;</span><br><span class="line">  &lt;ResourceContributor&gt;</span><br><span class="line">    &lt;PartyName&gt;</span><br><span class="line">      &lt;FullName&gt;The Edge&lt;/FullName&gt;</span><br><span class="line">    &lt;/PartyName&gt;</span><br><span class="line">    &lt;ResourceContributorRole&gt;GroupMember&lt;/ResourceContributorRole&gt;</span><br><span class="line">  &lt;/ResourceContributor&gt;</span><br><span class="line">  &lt;ResourceContributor&gt;</span><br><span class="line">    &lt;PartyName&gt;</span><br><span class="line">      &lt;FullName&gt;Adam Clayton&lt;/FullName&gt;</span><br><span class="line">    &lt;/PartyName&gt;</span><br><span class="line">    &lt;ResourceContributorRole&gt;GroupMember&lt;/ResourceContributorRole&gt;</span><br><span class="line">  &lt;/ResourceContributor&gt;</span><br><span class="line">  &lt;ResourceContributor&gt;</span><br><span class="line">    &lt;PartyName&gt;</span><br><span class="line">      &lt;FullName&gt;Larry Mullen, Jr.&lt;/FullName&gt;</span><br><span class="line">    &lt;/PartyName&gt;</span><br><span class="line">    &lt;ResourceContributorRole&gt;GroupMember&lt;/ResourceContributorRole&gt;</span><br><span class="line">  &lt;/ResourceContributor&gt;</span><br><span class="line">  </span><br><span class="line">  //一个艺术家两种角色</span><br><span class="line">  **&lt;ResourceContributor&gt;</span><br><span class="line">  &lt;PartyName&gt;</span><br><span class="line">    &lt;FullName&gt;</span><br><span class="line">      John Smith</span><br><span class="line">    &lt;/FullName&gt;</span><br><span class="line">  &lt;PartyName&gt;</span><br><span class="line">  &lt;ResourceContributorRole&gt;</span><br><span class="line">    Soloist</span><br><span class="line">  &lt;/ResourceContributorRole&gt;</span><br><span class="line">  &lt;ResourceContributorRole&gt;</span><br><span class="line">    Producer</span><br><span class="line">  &lt;/ResourceContributorRole&gt;</span><br><span class="line">&lt;/ResourceContributor&gt;**</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line">  &lt;DisplayArtistName&gt;U2&lt;/DisplayArtistName&gt;</span><br><span class="line">  ...</span><br><span class="line"> </span><br><span class="line">&lt;/SoundRecordingDetailsByTerritory&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参考链接：</span><br><span class="line"></span><br><span class="line">1. 标准</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/guidance-on-contributors%252C-artists-and-writers/band-members/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b. 角色相关</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// DisplayArtist 角色</span><br><span class="line">MainArtist</span><br><span class="line">FeaturedArtist</span><br><span class="line"></span><br><span class="line">// ResourceContributor </span><br><span class="line">// 2020年 艺术家</span><br><span class="line">1.Lyricist</span><br><span class="line">2.Composer</span><br><span class="line">3.ComposerLyricist</span><br><span class="line">4.ComposerAndOrLyricist</span><br><span class="line">// 旧版本的艺术家</span><br><span class="line">1.Lyricist</span><br><span class="line">2.Composer</span><br><span class="line">3.ComposerLyricist</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考链接：</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/guidance-on-contributors%252C-artists-and-writers/writer-roles/</span><br><span class="line"></span><br><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/guidance-on-contributors%252C-artists-and-writers/communicating-display-artist(s)-and-display-artist-name(s)/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">c.多个角色</span><br><span class="line"></span><br><span class="line">DDEX 消息允许与“主要艺术家”进行交流，即在产品封套上以大写字母显示的艺术家姓名。该信息可以通过两种方式提供：</span><br><span class="line"></span><br><span class="line">- `DisplayArtist`是一个组合，可以传达艺术家（或多个艺术家）的姓名和角色，这些艺术家是给定版本的主要艺术家</span><br><span class="line">- `DisplayArtistName`是一个字符串，可以按照发布创建者建议的显示名称的方式进行通信。每个版本只能有一个。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/guidance-on-contributors%252C-artists-and-writers/displayartistnames-for-releases-and-resources/</span><br></pre></td></tr></table></figure>
+
+<h2 id="b-插入和新增的区别"><a href="#b-插入和新增的区别" class="headerlink" title="b.插入和新增的区别"></a>b.插入和新增的区别</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考链接：</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/guidance-on-message-exchange-and-choreographies/differentiating-%22inserts%22-from-%22updates%22/</span><br></pre></td></tr></table></figure>
+
+<h2 id="c-下架相关信息"><a href="#c-下架相关信息" class="headerlink" title="c.下架相关信息"></a>c.下架相关信息</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考链接</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/deals-and-commercial-aspects/takedowns/</span><br></pre></td></tr></table></figure>
+
+<h2 id="d-用户定义的值"><a href="#d-用户定义的值" class="headerlink" title="d.用户定义的值"></a>d.用户定义的值</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考链接</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kb.ddex.net/implementing-each-standard/best-practices-for-all-ddex-standards/guidance-on-allowed-value-sets-(avs%252C-aka-code-lists)/user-defined-values/</span><br></pre></td></tr></table></figure>
+
+<h2 id="f-dsp相关"><a href="#f-dsp相关" class="headerlink" title="f.dsp相关"></a>f.dsp相关</h2><p><a target="_blank" rel="noopener" href="https://kb.ddex.net/about-ddex-standards/which-standard-do-i-need/ddex-for-dsps/">https://kb.ddex.net/about-ddex-standards/which-standard-do-i-need/ddex-for-dsps/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://adonispeng.github.io/javaai.github.io/2024/04/07/DDEX%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" data-id="clupadkba00022dmlckhb3m04" data-title="DDEX最佳实践" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DDEX/" rel="tag">DDEX</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/04/07/%E5%85%B3%E4%BA%8E%E6%88%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于我</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DDEX/" rel="tag">DDEX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K-JSON/" rel="tag">K-JSON</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" rel="tag">关于我</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DDEX/" style="font-size: 20px;">DDEX</a> <a href="/tags/K-JSON/" style="font-size: 10px;">K-JSON</a> <a href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" style="font-size: 10px;">关于我</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/07/DDEX%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">DDEX最佳实践</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/07/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/07/%E6%96%B0%E7%9A%84%E9%9F%B3%E4%B9%90%E8%A1%8C%E4%B8%9A%E4%BC%A0%E8%BE%93%E6%A0%87%E5%87%86K-JSON/">新的音乐行业传输标准K-JSON</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/07/DDEX%E9%83%BD%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%EF%BC%9F/">DDEX都用了哪些国际标准？</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/07/DDEX%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">DDEX是什么？</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 杨鹏<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
